@@ -15,10 +15,15 @@
     margin-top: 10px;
     margin-bottom: 10px
 }
-.update-task{
+.view-task{
     display:block;
     background-color: yellow;
-    width: 90%;
+    width: 80%;
+}
+.update-task{
+    display:block;
+    background-color: #32a852;
+    width: 10%;
 }
 .delete-task{
     display:block;

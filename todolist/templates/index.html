@@ -19,12 +19,15 @@
         </div>
         <div class="content">
             <div class="content-block">
-                {% if data %}
-                {% for task in data %}
+                {% if object_list %}
+                {% for task in object_list %}
                 <div class="content-block">
                     <div class="row">
+                        <div class="view-task">
+                            <a href="{% url 'detail' pk=task.id %}"><h2>{{task.title}}</h2></a>
+                        </div>
                         <div class="update-task">
-                            <a href="{% url 'modify' pk=task.id %}"><h2>{{task.title}}</h2></a>
+                            <a href="{% url 'update' pk=task.id %}">Update</a>
                         </div>
                         <div class="delete-task">
                             <a href="{% url 'delete' pk=task.id %}">Delete</a>

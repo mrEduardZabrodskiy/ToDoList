@@ -1,33 +1,41 @@
-from django.shortcuts import render
-from rest_framework import generics
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView, DeleteView,CreateView
+from rest_framework.permissions import IsAuthenticated
+from django.urls import reverse_lazy
 
 from .models import Task
-from .serializers import TaskSerializer
 
 # Create your views here.
 
-
-class TaskList(generics.ListAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+class TaskList(ListView):
+    model = Task
     template_name = 'index.html'
-    
-    def get(self, request):
-        data = Task.objects.all()
-        print(self.queryset)
-        return render(request, self.template_name, {'data': data})
+    context_object_name = 'tasks'
+
+
+class TaskCreate(CreateView):
+    model = Task
+    success_url = reverse_lazy('tasks')
+    fields = '__all__'
+    template_name = 'new_task.html'
 
     
-class CreateTask(generics.CreateAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-
+class TaskDetail(DetailView):
+    model = Task
+    template_name = 'detail.html'
     
-class ModifyTask(generics.RetrieveUpdateAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
-
-
-class DeleteTask(generics.DestroyAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+    
+class TaskUpdate(UpdateView):
+    model = Task
+    context_object_name = 'task'
+    template_name = 'update.html'
+    fields = '__all__'
+    success_url = reverse_lazy('tasks')
+    
+class TaskDelete(DeleteView):
+    model = Task
+    success_url = 'tasks'
+    context_object_name = 'task'
+    template_name = 'delete.html'
+    success_url = reverse_lazy('tasks')
