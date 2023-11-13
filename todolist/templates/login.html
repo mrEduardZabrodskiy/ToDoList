@@ -6,15 +6,12 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="form">
-        <form action="">
-            <label for="username">Username</label>
-            <input type="text" name="username">
-            <label for="password">Password</label>
-            <input type="password">
-            <input type="submit" value="Login">
-        </form>
-    </div>
-
+    <h3>Login</h3>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Login">
+    </form>
+    <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
 </body>
 </html>

@@ -9,10 +9,17 @@
 </head>
 <body>
     <div class="main">
+        {% if request.user.is_authenticated %}
+            <p>{{request.user}}</p>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
         <div class="header">
             <div class="logo">
                 <h2>Task Manager</h2>
             </div>
+            {% if request.user.is_authenticated%}
             <div class="create">
                 <a href="{% url 'create' %}">Create</a>
             </div>
@@ -20,11 +27,11 @@
         <div class="content">
             <div class="content-block">
                 {% if object_list %}
-                {% for task in object_list %}
+                {% for task in tasks %}
                 <div class="content-block">
                     <div class="row">
                         <div class="view-task">
-                            <a href="{% url 'detail' pk=task.id %}"><h2>{{task.title}}</h2></a>
+                            <a href="{% url 'detail' pk=task.id %}"><h2>{{task.title}}-{{task.user.username}}</h2></a>
                         </div>
                         <div class="update-task">
                             <a href="{% url 'update' pk=task.id %}">Update</a>
@@ -37,6 +44,9 @@
                 {% endfor %}
                 {% else %}
                 <h3>No task to show.</h3>
+                {% endif %}
+                {% else %}
+                <p>Please log in.</p>
                 {% endif %}
             </div>
         </div>
